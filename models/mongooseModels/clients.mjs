@@ -13,6 +13,7 @@ const clientsSchema = new Schema(
     emergencyContactNo: { type: String, default: null },
     streetAddress: { type: String, default: null },
     houseNo: { type: String, default: null },
+    weight: { type: String, default: null },
     city: { type: String, default: null },
     state: { type: String, default: null },
     zipCode: { type: Number, default: null },
