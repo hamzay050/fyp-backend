@@ -7,7 +7,7 @@ import nodemailer from "nodemailer"; // Use nodemailer for sending emails
 import pkg from "../models/mongooseModels/clients.mjs";
 import { accessToken } from "../common/token.mjs";
 async function signup(req, res) {
-  const { firstName, lastName, email, password } = req.body;
+  const { firstName, lastName, email, password, role } = req.body;
 
   try {
     const checker = await pkg.Clients.findOne({ email });
@@ -20,6 +20,7 @@ async function signup(req, res) {
         lastName,
         email,
         password: hashPassword,
+        role,
       });
 
       await newUser.save();

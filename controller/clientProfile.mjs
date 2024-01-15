@@ -36,7 +36,26 @@ async function updateClientProfile(req, res) {
     return res.status(500).json({ error });
   }
 }
+async function updateDoctorProfile(req, res) {
+  const clientId = req.params.clientId;
+  const updatedData = req.body;
 
+  try {
+    const clientProfile = await pkg.Clients.findOneAndUpdate(
+      { _id: clientId },
+      { $set: updatedData },
+      { new: true }
+    );
+
+    if (!clientProfile) {
+      return res.status(404).json({ error: "Client profile not found" });
+    }
+
+    return res.status(200).json(clientProfile);
+  } catch (error) {
+    return res.status(500).json({ error });
+  }
+}
 async function deleteClientProfile(req, res) {
   const clientId = req.params.clientId;
 
@@ -55,4 +74,9 @@ async function deleteClientProfile(req, res) {
   }
 }
 
-export { getClientProfile, updateClientProfile, deleteClientProfile };
+export {
+  getClientProfile,
+  updateClientProfile,
+  deleteClientProfile,
+  updateDoctorProfile,
+};
