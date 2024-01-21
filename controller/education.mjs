@@ -1,12 +1,13 @@
 // Import the Education model
-import Education from "../models/educationModel.mjs";
+import pkg from "../models/mongooseModels/education.mjs";
 
 // Controller function to get education by ID
 export const getEducation = async (req, res) => {
-  const educationId = req.params.educationId;
+  const clientId = req.params.clientId;
+  console.log("🚀 ~ getEducation ~ clientId:", clientId);
 
   try {
-    const education = await Education.findById(educationId);
+    const education = await pkg.Education.find({ clientId });
     res.status(200).json(education);
   } catch (error) {
     console.error(error);
@@ -19,7 +20,7 @@ export const createEducation = async (req, res) => {
   const educationData = req.body;
 
   try {
-    const newEducation = await Education.create(educationData);
+    const newEducation = await pkg.Education.create(educationData);
     res.status(201).json(newEducation);
   } catch (error) {
     console.error(error);
@@ -33,7 +34,7 @@ export const updateEducation = async (req, res) => {
   const updatedData = req.body;
 
   try {
-    const updatedEducation = await Education.findByIdAndUpdate(
+    const updatedEducation = await pkg.Education.findOneAndUpdate(
       educationId,
       updatedData,
       { new: true }
@@ -50,7 +51,7 @@ export const deleteEducation = async (req, res) => {
   const educationId = req.params.educationId;
 
   try {
-    const deletedEducation = await Education.findByIdAndDelete(educationId);
+    const deletedEducation = await pkg.Education.findByIdAndDelete(educationId);
     res.status(200).json(deletedEducation);
   } catch (error) {
     console.error(error);
