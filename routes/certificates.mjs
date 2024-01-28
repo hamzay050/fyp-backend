@@ -5,8 +5,8 @@ import {
   updateCertificate,
   deleteCertificate,
   createCertificate,
-} from "../controller/certificateController.mjs";
-import verifyAccessToken from "../middleware/verifyAccessToken.mjs";
+} from "../controller/certificates.mjs";
+import verifyAccessToken from "../middleware/verifyAccessToken .mjs";
 
 router.get("/:certificateId", verifyAccessToken, getCertificate);
 router.put("/:certificateId", verifyAccessToken, updateCertificate);

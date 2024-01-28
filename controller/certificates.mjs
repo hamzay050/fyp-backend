@@ -1,10 +1,11 @@
 // Import the Certificate model
-import Education from "../models/certificateModel.mjs";
+import pkg from "../models/mongooseModels/certificates.mjs";
 export const createCertificate = async (req, res) => {
   const certificateData = req.body;
+  console.log(req.body)
 
   try {
-    const newCertificate = await Education.create(certificateData);
+    const newCertificate = await pkg.Certificate.create(certificateData);
     res.status(201).json(newCertificate);
   } catch (error) {
     console.error(error);
@@ -16,7 +17,7 @@ export const getCertificate = async (req, res) => {
   const certificateId = req.params.certificateId;
 
   try {
-    const certificate = await Education.findById(certificateId);
+    const certificate = await pkg.Certificate.findById(certificateId);
     res.status(200).json(certificate);
   } catch (error) {
     console.error(error);
@@ -30,7 +31,7 @@ export const updateCertificate = async (req, res) => {
   const updatedData = req.body;
 
   try {
-    const updatedCertificate = await Education.findByIdAndUpdate(
+    const updatedCertificate = await pkg.Certificate.findByIdAndUpdate(
       certificateId,
       updatedData,
       { new: true }
@@ -47,7 +48,7 @@ export const deleteCertificate = async (req, res) => {
   const certificateId = req.params.certificateId;
 
   try {
-    const deletedCertificate = await Education.findByIdAndDelete(certificateId);
+    const deletedCertificate = await pkg.Certificate.findByIdAndDelete(certificateId);
     res.status(200).json(deletedCertificate);
   } catch (error) {
     console.error(error);

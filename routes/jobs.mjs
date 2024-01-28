@@ -5,8 +5,8 @@ import {
   createJob,
   updateJob,
   deleteJob,
-} from "../controller/jobsController.mjs";
-import verifyAccessToken from "../middleware/verifyAccessToken.mjs";
+} from "../controller/jobs.mjs";
+import verifyAccessToken from "../middleware/verifyAccessToken .mjs";
 
 router.get("/:jobId", verifyAccessToken, getJob);
 router.post("/", verifyAccessToken, createJob); // New route for creating a job
