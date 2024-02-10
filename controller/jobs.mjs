@@ -1,12 +1,12 @@
 // Import the Jobs model
-import Jobs from "../models/jobsModel.mjs";
+import pkg from "../models/mongooseModels/jobs.mjs";
 
 // Controller function to get a job by ID
 export const getJob = async (req, res) => {
   const jobId = req.params.jobId;
 
   try {
-    const job = await Jobs.findById(jobId);
+    const job = await pkg.Jobs.findById(jobId);
     res.status(200).json(job);
   } catch (error) {
     console.error(error);
@@ -19,7 +19,7 @@ export const createJob = async (req, res) => {
   const jobData = req.body;
 
   try {
-    const newJob = await Jobs.create(jobData);
+    const newJob = await pkg.Jobs.create(jobData);
     res.status(201).json(newJob);
   } catch (error) {
     console.error(error);
@@ -33,7 +33,7 @@ export const updateJob = async (req, res) => {
   const updatedData = req.body;
 
   try {
-    const updatedJob = await Jobs.findByIdAndUpdate(jobId, updatedData, {
+    const updatedJob = await pkg.Jobs.findByIdAndUpdate(jobId, updatedData, {
       new: true,
     });
     res.status(200).json(updatedJob);
@@ -48,7 +48,7 @@ export const deleteJob = async (req, res) => {
   const jobId = req.params.jobId;
 
   try {
-    const deletedJob = await Jobs.findByIdAndDelete(jobId);
+    const deletedJob = await pkg.Jobs.findByIdAndDelete(jobId);
     res.status(200).json(deletedJob);
   } catch (error) {
     console.error(error);
