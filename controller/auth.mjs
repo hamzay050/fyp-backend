@@ -76,7 +76,7 @@ async function login(req, res) {
     res.cookie("accessToken", token);
 
     return res.status(200).json({
-      message: "Your account has been created successfully!",
+      message: "Login Success",
       token,
       data: userData,
     });

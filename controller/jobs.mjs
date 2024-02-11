@@ -6,7 +6,7 @@ export const getJob = async (req, res) => {
   const jobId = req.params.jobId;
 
   try {
-    const job = await pkg.Jobs.findById(jobId);
+    const job = await pkg.Jobs.find({clientId:jobId});
     res.status(200).json(job);
   } catch (error) {
     console.error(error);
