@@ -15,9 +15,10 @@ export const createCertificate = async (req, res) => {
 // Controller function to get a certificate by ID
 export const getCertificate = async (req, res) => {
   const certificateId = req.params.certificateId;
+  console.log(certificateId)
 
   try {
-    const certificate = await pkg.Certificate.findById(certificateId);
+    const certificate = await pkg.Certificate.find({clientId:certificateId});
     res.status(200).json(certificate);
   } catch (error) {
     console.error(error);

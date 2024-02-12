@@ -1,10 +1,11 @@
 import mongoose from "mongoose";
 import mongooseDelete from "mongoose-delete";
 
-const { Schema } = mongoose;
+const { Schema,Types } = mongoose;
 
 const certificateSchema = new Schema(
   {
+    clientId: { type: Types.ObjectId, default: null },
     title: { type: String, default: null },
     startDate: { type: Date, default: null },
     endDate: { type: Date, default: null },
