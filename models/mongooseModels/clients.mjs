@@ -41,6 +41,7 @@ const clientsSchema = new Schema(
     physicalActivity:{type:String, default:null},
     familyMedicalHistory:{type:String, default:null},
     isProfileCompleted: { type: Boolean, default: false },
+    doctorAbout:{type:String, default:null},
     mondayStartTime: { type: Date },
     mondayEndTime: { type: Date },
     tuesdayStartTime: { type: Date },
