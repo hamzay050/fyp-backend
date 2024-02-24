@@ -27,6 +27,7 @@ const clientsSchema = new Schema(
     dateOfBirth: { type: Date, default: null },
     isProfileCompleted: { type: Boolean, default: false },
     role: { type: String, default: "patient" },
+    status:{type: String, default:'pending'},
     isMonday: { type: Boolean, default: false },
     isTuesday: { type: Boolean, default: false },
     isWednesday: { type: Boolean, default: false },
