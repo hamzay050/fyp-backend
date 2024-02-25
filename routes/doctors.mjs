@@ -2,7 +2,6 @@ import express from "express";
 const router = express.Router();
 import { getDoctorProfile, getAllDoctors } from "../controller/doctor.mjs";
 import verifyAccessToken from "../middleware/verifyAccessToken .mjs";
-import express from "express";
 import {
   getDoctorProfiles,
   getDoctorApprovedProfiles,
