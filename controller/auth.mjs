@@ -50,8 +50,9 @@ async function signup(req, res) {
     return res.status(500).json({ error });
   }
 }
+
 async function login(req, res) {
-  const { email, password } = req.body;
+  const { email, password, role } = req.body;
 
   let userData = {};
   try {
@@ -60,6 +61,8 @@ async function login(req, res) {
       email: email,
       password: hashPassword,
     });
+    if (record.role != role)
+      return res.status(401).json({ error: { message: "unauthorized" } });
     if (!record)
       return res
         .status(500)
@@ -70,6 +73,7 @@ async function login(req, res) {
       firstName: record.firstName,
       lastName: record.lastName,
       email: record.email,
+      role: record.role,
     };
 
     const token = await accessToken(userData);
@@ -85,6 +89,7 @@ async function login(req, res) {
     return res.status(500).json({ error });
   }
 }
+
 // async function login(req, res) {
 //   const { email, password } = req.body;
 

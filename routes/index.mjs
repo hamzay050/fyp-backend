@@ -10,6 +10,7 @@ import doctor from "./doctors.mjs";
 import appointments from "./appointments.mjs";
 import prescribeMedicine from "./prescribeMedicine.mjs";
 
+import chat from "./chat.mjs";
 function setRoutes(app) {
   app.use("/auth", auth);
   app.use("/profile", profile);
@@ -21,7 +22,8 @@ function setRoutes(app) {
   app.use("/timeSlot", timeSlot);
   app.use("/doctor", doctor);
   app.use("/appointment", appointments);
-  app.use("/prescribe-medicine",prescribeMedicine)
+  app.use("/prescribe-medicine", prescribeMedicine);
+  app.use("/messages", chat);
 }
 
 export default setRoutes;

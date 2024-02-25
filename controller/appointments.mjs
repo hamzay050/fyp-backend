@@ -85,6 +85,7 @@ export const getAppointmentByDoctorId = async (req, res) => {
 export const updateAppointmentById = async (req, res) => {
   try {
     const { id, status } = req.body;
+    console.log("🚀 ~ updateAppointmentById ~ id, status:", id, status);
     const appointment = await pkg.Appointment.findOneAndUpdate(
       { _id: id },
       { status }
