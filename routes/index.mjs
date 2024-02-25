@@ -6,7 +6,8 @@ import jobs from "./jobs.mjs";
 import patientMedicine from "./patientMedicine.mjs";
 import specialization from "./specialization.mjs";
 import timeSlot from "./timeSlot.mjs";
-import doctor from "./doctorProfile.mjs";
+import doctor from "./doctors.mjs";
+import appointments from "./appointments.mjs";
 
 function setRoutes(app) {
   app.use("/auth", auth);
@@ -17,7 +18,8 @@ function setRoutes(app) {
   app.use("/medicine", patientMedicine);
   app.use("/specialization", specialization);
   app.use("/timeSlot", timeSlot);
-  app.use("/doctor",doctor);
+  app.use("/doctor", doctor);
+  app.use("/appointment", appointments);
 }
 
 export default setRoutes;
