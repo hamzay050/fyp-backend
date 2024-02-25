@@ -1,10 +1,10 @@
 import moment from "moment";
 
 import pkg from "../models/mongooseModels/timeSlot.mjs";
+import pkgAppointment from "../models/mongooseModels/appointment.mjs";
 
 const getTimeSlotsForDoctor = async (req, res) => {
   const { doctorId } = req.query;
-
   try {
     const timeSlots = await pkg.TimeSlot.find({ doctorId });
 
@@ -30,6 +30,43 @@ const getTimeSlotsForDoctor = async (req, res) => {
     });
 
     res.status(200).json(schedule);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server Error" });
+  }
+};
+// const getTimeSlotsForPatient = async (req, res) => {
+//   const { doctorId, day } = req.query;
+//   try {
+//     const timeSlots = await pkg.TimeSlot.find({ doctorId, day });
+
+//     res.status(200).json(timeSlots);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: "Server Error" });
+//   }
+// };
+
+const getTimeSlotsForPatient = async (req, res) => {
+  const { doctorId, date, day } = req.query;
+  console.log("🚀 ~ getTimeSlotsForPatient ~ day:", day, date);
+  try {
+    const appointments = await pkgAppointment.Appointment.find({
+      doctorId,
+      date,
+    });
+
+    const occupiedTimeSlotIds = appointments.map((appointment) =>
+      appointment.slotId.toString()
+    );
+
+    const timeSlots = await pkg.TimeSlot.find({ doctorId, day });
+
+    const availableTimeSlots = timeSlots.filter(
+      (timeSlot) => !occupiedTimeSlotIds.includes(timeSlot._id.toString())
+    );
+
+    res.status(200).json(availableTimeSlots);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server Error" });
@@ -128,10 +165,14 @@ const removeTimeSlots = async (req, res) => {
     res.status(500).json({ message: "Server Error" });
   }
 };
-
+const updateTimeSlotStatus = async (id, newStatus) => {
+  await pkg.TimeSlot.findOneAndUpdate({ _id: id }, { status: newStatus });
+};
 export {
   createTimeSlots,
   updateTimeSlots,
   removeTimeSlots,
   getTimeSlotsForDoctor,
+  getTimeSlotsForPatient,
+  updateTimeSlotStatus,
 };
