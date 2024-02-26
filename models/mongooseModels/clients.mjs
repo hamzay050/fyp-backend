@@ -19,6 +19,7 @@ const clientsSchema = new Schema(
     country: { type: String, default: null },
     weight: { type: String, default: null },
     medicalLicenseNumber: { type: Number, default: null },
+    speciality: {type:String, default:null},
     zipCode: { type: Number, default: null },
     height: { type: Number, default: null },
     maritalStatus: { type: String, default: null },

@@ -1,5 +1,6 @@
 import pkg from "../models/mongooseModels/prescribeMedicine.mjs";
 import pkgAppointment from "../models/mongooseModels/appointment.mjs";
+import mongoose from "mongoose"
 
 export async function createMedicine(req, res) {
     const {data} =req.body;
@@ -44,4 +45,38 @@ export async function updateAppointmentStatus(req,res){
    } catch (error) {
     res.statue(500).json({error})
    }
+}
+
+export async function getPatientData(req,res){
+    const {id}= req.params;
+    try {
+        const findPatient= await pkgAppointment.Appointment.aggregate([
+            {
+                $match:{
+                    _id: new mongoose.Types.ObjectId(id)
+                }
+            },
+            {
+                $lookup:{
+                    from:"clients",
+                    localField:"patientId",
+                    foreignField:"_id",
+                    as:"profileDetails"
+                }
+            }
+        ])
+        res.status(200).json(findPatient)
+    } catch (error) {
+        res.status(200).json({error})
+    }
+}
+
+export async function getAppointmentStatus(req,res){
+    const {id}= req.params;
+    try {
+        const findStatus= await pkgAppointment.Appointment.findById(id)
+        res.status(200).json(findStatus)
+    } catch (error) {
+        res.status(200).json({error})
+    }
 }

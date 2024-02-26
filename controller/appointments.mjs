@@ -1,5 +1,7 @@
 import pkg from "../models/mongooseModels/appointment.mjs";
 import { updateTimeSlotStatus } from "./timeSlot.mjs";
+import pkgClient from "../models/mongooseModels/clients.mjs";
+import mongoose from "mongoose"
 
 // Create a new appointment
 export const createAppointment = async (req, res) => {
@@ -104,6 +106,7 @@ export const updateAppointmentById = async (req, res) => {
 export const deleteAppointmentById = async (req, res) => {
   try {
     const { id } = req.params;
+    console.log(req.params)
     const appointment = await pkg.Appointment.findByIdAndDelete(id);
     if (!appointment) {
       return res.status(404).json({ message: "Appointment not found" });
@@ -116,3 +119,102 @@ export const deleteAppointmentById = async (req, res) => {
     res.status(500).json({ message: "Server Error" });
   }
 };
+
+export async function getPatientDetails(req,res){
+  const {id} = req.params;
+  try {
+    const findPatient= await pkg.Appointment.aggregate([
+      {
+        $match:{
+          doctorId: new mongoose.Types.ObjectId(id),
+          status:"pending"
+        }
+      },
+      {
+        $lookup:{
+          from:"clients",
+          localField: "patientId",
+          foreignField:"_id",
+          as:"patientsData"
+        }
+      },
+      {
+        $lookup:{
+          from:"timeslots",
+          localField:"slotId",
+          foreignField:"_id",
+          as:"slotsData"
+        }
+      }
+    ])
+    res.status(200).json(findPatient)
+  } catch (error) {
+    res.status(500).json({error})
+  }
+}
+
+export async function getPatientApprovedDetails(req,res){
+  const {id} = req.params;
+  try {
+    const findPatient= await pkg.Appointment.aggregate([
+      {
+        $match:{
+          doctorId: new mongoose.Types.ObjectId(id),
+          status:"approved"
+        }
+      },
+      {
+        $lookup:{
+          from:"clients",
+          localField: "patientId",
+          foreignField:"_id",
+          as:"patientsData"
+        }
+      },
+      {
+        $lookup:{
+          from:"timeslots",
+          localField:"slotId",
+          foreignField:"_id",
+          as:"slotsData"
+        }
+      }
+    ])
+    res.status(200).json(findPatient)
+  } catch (error) {
+    res.status(500).json({error})
+  }
+}
+
+export async function getPatientRejectedDetails(req,res){
+  const {id} = req.params;
+  try {
+    const findPatient= await pkg.Appointment.aggregate([
+      {
+        $match:{
+          doctorId: new mongoose.Types.ObjectId(id),
+          status:"cancelled"
+        }
+      },
+      {
+        $lookup:{
+          from:"clients",
+          localField: "patientId",
+          foreignField:"_id",
+          as:"patientsData"
+        }
+      },
+      {
+        $lookup:{
+          from:"timeslots",
+          localField:"slotId",
+          foreignField:"_id",
+          as:"slotsData"
+        }
+      }
+    ])
+    res.status(200).json(findPatient)
+  } catch (error) {
+    res.status(500).json({error})
+  }
+}
