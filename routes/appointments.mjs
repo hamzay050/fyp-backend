@@ -8,6 +8,9 @@ import {
   deleteAppointmentById,
   getAppointmentByPatientId,
   getAppointmentByDoctorId,
+  getPatientDetails,
+  getPatientApprovedDetails,
+  getPatientRejectedDetails
 } from "../controller/appointments.mjs";
 import verifyAccessToken from "../middleware/verifyAccessToken .mjs";
 
@@ -30,6 +33,12 @@ router.get(
   verifyAccessToken,
   getAppointmentByDoctorId
 );
+router.get('/patient-details/:id',getPatientDetails)
+
+router.get('/patient-approved-details/:id',getPatientApprovedDetails)
+
+router.get('/patient-rejected-details/:id',getPatientRejectedDetails)
+
 
 router.get("/:id", verifyAccessToken, getAppointmentById);
 

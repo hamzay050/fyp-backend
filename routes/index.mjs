@@ -4,7 +4,6 @@ import education from "./education.mjs";
 import certificate from "./certificates.mjs";
 import jobs from "./jobs.mjs";
 import patientMedicine from "./patientMedicine.mjs";
-import specialization from "./specialization.mjs";
 import timeSlot from "./timeSlot.mjs";
 import doctor from "./doctors.mjs";
 import appointments from "./appointments.mjs";
@@ -18,7 +17,6 @@ function setRoutes(app) {
   app.use("/certificate", certificate);
   app.use("/jobs", jobs);
   app.use("/medicine", patientMedicine);
-  app.use("/specialization", specialization);
   app.use("/timeSlot", timeSlot);
   app.use("/doctor", doctor);
   app.use("/appointment", appointments);
