@@ -25,6 +25,7 @@ const clientsSchema = new Schema(
     maritalStatus: { type: String, default: null },
     bloodGroup: { type: String, default: null },
     gender: { type: String, default: null },
+    fee:{type:String,default:null},
     dateOfBirth: { type: Date, default: null },
     isProfileCompleted: { type: Boolean, default: false },
     role: { type: String, default: "patient" },

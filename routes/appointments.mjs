@@ -10,7 +10,8 @@ import {
   getAppointmentByDoctorId,
   getPatientDetails,
   getPatientApprovedDetails,
-  getPatientRejectedDetails
+  getPatientRejectedDetails,
+  getDoctorDetails
 } from "../controller/appointments.mjs";
 import verifyAccessToken from "../middleware/verifyAccessToken .mjs";
 
@@ -38,6 +39,8 @@ router.get('/patient-details/:id',getPatientDetails)
 router.get('/patient-approved-details/:id',getPatientApprovedDetails)
 
 router.get('/patient-rejected-details/:id',getPatientRejectedDetails)
+
+router.get('/doctor-details',getDoctorDetails)
 
 
 router.get("/:id", verifyAccessToken, getAppointmentById);

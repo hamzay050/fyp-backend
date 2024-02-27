@@ -18,11 +18,6 @@ async function getDoctorProfile(req, res) {
 async function getAllDoctors(req, res) {
   try {
     const doctors = await pkg.Clients.find({ role: "doctor" });
-
-    if (!doctors) {
-      return res.status(404).json({ error: "Client profile not found" });
-    }
-
     return res.status(200).json(doctors);
   } catch (error) {
     return res.status(500).json({ error });

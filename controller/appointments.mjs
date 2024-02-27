@@ -218,3 +218,27 @@ export async function getPatientRejectedDetails(req,res){
     res.status(500).json({error})
   }
 }
+
+export async function getDoctorDetails(req,res){
+  const {id}=req.query;
+  try {
+    const doctor= await pkg.Appointment.aggregate([
+      {
+        $match:{
+          patientId: new mongoose.Types.ObjectId(id)
+        }
+      },
+      {
+        $lookup:{
+          from:'clients',
+          localField:'doctorId',
+          foreignField:"_id",
+          as:'doctorProfile'
+        }
+      }
+    ])
+    res.status(200).json(doctor)
+  } catch (error) {
+    res.status(500).json({error})
+  }
+}

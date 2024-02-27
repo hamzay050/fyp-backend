@@ -8,6 +8,8 @@ import timeSlot from "./timeSlot.mjs";
 import doctor from "./doctors.mjs";
 import appointments from "./appointments.mjs";
 import prescribeMedicine from "./prescribeMedicine.mjs";
+import review from "./review.mjs";
+import report from "./report.mjs";
 
 import chat from "./chat.mjs";
 function setRoutes(app) {
@@ -22,6 +24,8 @@ function setRoutes(app) {
   app.use("/appointment", appointments);
   app.use("/prescribe-medicine", prescribeMedicine);
   app.use("/messages", chat);
+  app.use("/review",review);
+  app.use("/report",report);
 }
 
 export default setRoutes;
