@@ -74,9 +74,19 @@ async function deleteClientProfile(req, res) {
   }
 }
 
+async function getAllPatients(req,res){
+  try {
+    const patients = await pkg.Clients.find({ role: "patient" });
+    return res.status(200).json(patients);
+  } catch (error) {
+    return res.status(500).json({ error });
+  }
+}
+
 export {
   getClientProfile,
   updateClientProfile,
   deleteClientProfile,
   updateDoctorProfile,
+  getAllPatients
 };
