@@ -100,6 +100,31 @@ async function getAllPatients(req, res) {
   }
 }
 
+async function getMonthlyRegisteration(req,res){
+  try {
+    const data = await Client.aggregate([
+      {
+        $project: {
+          userType: { $cond: { if: { $eq: ["$role", "doctor"] }, then: "doctor", else: "patient" } },
+          yearMonth: { $dateToString: { format: "%Y-%m", date: "$registration_date" } }
+        }
+      },
+      {
+        $group: {
+          _id: { userType: "$userType", yearMonth: "$yearMonth" },
+          count: { $sum: 1 }
+        }
+      },
+      {
+        $sort: { "_id.yearMonth": 1 }
+      }
+    ]);
+    res.status(200).json(data)
+  } catch (error) {
+    res.status(500).json({error})
+  }
+}
+
 export {
   getClientProfile,
   updateClientProfile,
@@ -107,4 +132,5 @@ export {
   updateDoctorProfile,
   getAllPatients,
   uploadProfilePic,
+  getMonthlyRegisteration
 };

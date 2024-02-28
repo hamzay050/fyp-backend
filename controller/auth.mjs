@@ -31,6 +31,7 @@ async function signup(req, res) {
         firstName: newUser.firstName,
         lastName: newUser.lastName,
         email: newUser.email,
+        role:'patient'
       };
       const token = jwt.sign(userData, process.env.SECRET, {
         expiresIn: "86400s",

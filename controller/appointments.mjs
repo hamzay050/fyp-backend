@@ -219,6 +219,39 @@ export async function getPatientRejectedDetails(req,res){
   }
 }
 
+export async function getPatientCompletedDetails(req,res){
+  const {id} = req.params;
+  try {
+    const findPatient= await pkg.Appointment.aggregate([
+      {
+        $match:{
+          doctorId: new mongoose.Types.ObjectId(id),
+          status:"completed"
+        }
+      },
+      {
+        $lookup:{
+          from:"clients",
+          localField: "patientId",
+          foreignField:"_id",
+          as:"patientsData"
+        }
+      },
+      {
+        $lookup:{
+          from:"timeslots",
+          localField:"slotId",
+          foreignField:"_id",
+          as:"slotsData"
+        }
+      }
+    ])
+    res.status(200).json(findPatient)
+  } catch (error) {
+    res.status(500).json({error})
+  }
+}
+
 export async function getDoctorDetails(req,res){
   const {id}=req.query;
   try {
@@ -238,6 +271,25 @@ export async function getDoctorDetails(req,res){
       }
     ])
     res.status(200).json(doctor)
+  } catch (error) {
+    res.status(500).json({error})
+  }
+}
+
+
+export async function getCompletedAppointments(req,res){
+  try {
+    const findApproved= await pkg.Appointment.find({status:'completed'})
+    res.status(200).json(findApproved)
+  } catch (error) {
+    res.status(500).json({error})
+  }
+}
+
+export async function getRejectedAppointments(req,res){
+  try {
+    const findApproved= await pkg.Appointment.find({status:'rejected'})
+    res.status(200).json(findApproved)
   } catch (error) {
     res.status(500).json({error})
   }
