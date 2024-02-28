@@ -15,6 +15,23 @@ async function getClientProfile(req, res) {
     return res.status(500).json({ error });
   }
 }
+async function uploadProfilePic(req, res) {
+  const { id, clientId } = req.body;
+  console.log("🚀 ~ uploadProfilePic ~ clientId:", clientId);
+  const filePath = req.file.path;
+  console.log("🚀 ~ uploadProfilePic ~ filePath:", filePath);
+  if (filePath) {
+    const filePathModified = filePath.replace("public", "").replace(/\\/g, "/");
+
+    const clientProfile = await pkg.Clients.findOneAndUpdate(
+      { _id: clientId },
+      { profilePicture: filePathModified }
+    );
+    return res.status(200).json(clientProfile);
+  }
+
+  return res.status(500).json({ error });
+}
 
 async function updateClientProfile(req, res) {
   const clientId = req.params.clientId;
@@ -74,7 +91,7 @@ async function deleteClientProfile(req, res) {
   }
 }
 
-async function getAllPatients(req,res){
+async function getAllPatients(req, res) {
   try {
     const patients = await pkg.Clients.find({ role: "patient" });
     return res.status(200).json(patients);
@@ -88,5 +105,6 @@ export {
   updateClientProfile,
   deleteClientProfile,
   updateDoctorProfile,
-  getAllPatients
+  getAllPatients,
+  uploadProfilePic,
 };

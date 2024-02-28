@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Medicine Prescription</title>
+    <style>
+      /* Add your custom styles here */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+      }
+      .prescription {
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: #f9f9f9;
+        padding: 20px;
+        border: 1px solid #ccc;
+      }
+      h1 {
+        text-align: center;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+      th,
+      td {
+        padding: 8px;
+        border-bottom: 1px solid #ddd;
+        text-align: left;
+      }
+      .doctor-info {
+        text-align: right;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="prescription">
+      <h1>Medicine Prescription</h1>
+      <div class="patient-info">
+        <p><strong>Patient:</strong> <%= patientName %></p>
+        <p><strong>Age:</strong> <%= patientAge %></p>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Medicine Name</th>
+            <th>Dosage</th>
+            <th>Frequency</th>
+            <th>Instructions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% prescriptions.forEach(prescription => { %>
+          <tr>
+            <td><%= prescription.medicineName %></td>
+            <td><%= prescription.dosage %></td>
+            <td><%= prescription.frequency %></td>
+            <td><%= prescription.instructions %></td>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+      <div class="diagnosis">
+        <h3>Diagnosis:</h3>
+        <p><%= diagnosisComment %></p>
+      </div>
+      <div class="special-instructions">
+        <h3>Special Instructions:</h3>
+        <p><%= specialInstructions %></p>
+      </div>
+      <div class="doctor-info">
+        <p><strong>Doctor:</strong> <%= doctorName %></p>
+        <p><strong>Specialization:</strong> <%= doctorSpecialization %></p>
+      </div>
+    </div>
+  </body>
+</html>
