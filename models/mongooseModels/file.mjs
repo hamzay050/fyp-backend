@@ -1,27 +1,18 @@
 // Import mongoose
 import mongoose from "mongoose";
-
+const { Schema, Types } = mongoose;
 // Define the schema for file documents
-const fileDocumentSchema = new mongoose.Schema({
-  fileName: {
-    type: String,
+const fileDocumentSchema = new Schema({
+  appointmentId: {
+    type: Types.ObjectId,
     required: true,
   },
   filePath: {
     type: String,
     required: true,
   },
-  fileSize: {
-    type: Number,
-    required: true,
-  },
-  fileType: {
+  fileName: {
     type: String,
-    required: true,
-  },
-  uploadDate: {
-    type: Date,
-    default: Date.now,
   },
 });
 
@@ -29,4 +20,4 @@ const fileDocumentSchema = new mongoose.Schema({
 const FileDocument = mongoose.model("FileDocument", fileDocumentSchema);
 
 // Export the model
-export default FileDocument;
+export default { FileDocument };
