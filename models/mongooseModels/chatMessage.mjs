@@ -13,6 +13,11 @@ const chatMessageSchema = new mongoose.Schema({
 
     required: true,
   },
+  appointmentId: {
+    type: mongoose.Schema.Types.ObjectId,
+
+    required: true,
+  },
   message: {
     type: String,
     required: true,

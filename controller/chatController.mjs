@@ -1,14 +1,15 @@
 import pkg from "../models/mongooseModels/chatMessage.mjs";
 
 async function getAllMessages(req, res) {
-  const { senderId, receiverId } = req.query;
+  const { senderId, receiverId, appointmentId } = req.query;
   try {
     const messages = await pkg.ChatMessage.find({
+      appointmentId: { $exists: true, $ne: null }, // Filter messages with appointmentId
       $or: [
-        { senderId, receiverId },
-        { senderId: receiverId, receiverId: senderId },
+        { senderId, receiverId, appointmentId },
+        { senderId: receiverId, appointmentId },
       ],
-    }).sort({ createdAt: -1 });
+    }).sort({ createdAt: "asc" }); // Sort by createdAt in descending order
     res.json(messages);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -17,12 +18,13 @@ async function getAllMessages(req, res) {
 
 // Function to create a new chat message
 async function createMessage(req, res) {
-  const { senderId, receiverId, message } = req.body;
+  const { senderId, receiverId, message, appointmentId } = req.body;
   console.log(
     "🚀 ~ createMessage ~ senderId, receiverId, message:",
     senderId,
     receiverId,
-    message
+    message,
+    appointmentId
   );
 
   try {
@@ -30,6 +32,7 @@ async function createMessage(req, res) {
       senderId,
       receiverId,
       message,
+      appointmentId,
     });
 
     res.status(201).json(chatMessage);
