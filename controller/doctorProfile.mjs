@@ -94,3 +94,34 @@ export async function updateDoctorPendingProfile(req,res){
     res.status(500).json({error})
   }
 }
+
+
+export async function getAllDoctorsWithRating(req,res){
+  try {
+    const result= await pkg.Clients.aggregate([
+      {
+        $match:{
+          role:'doctor',
+          status:'approved'
+        }
+      },
+      {
+        $lookup:{
+          from:'reviews',
+          localField:'_id',
+          foreignField:'doctorId',
+          as:'reviewsData'
+        }
+      },
+      {
+        $addFields: {
+          averageRating: { $avg: '$reviewsData.reviewRating' }
+        }
+      },
+    ])
+    res.status(200).json(result)
+    console.log(result)
+  } catch (error) {
+    res.status(500).json({error})
+  }
+}

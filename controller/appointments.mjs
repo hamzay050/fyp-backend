@@ -288,7 +288,27 @@ export async function getCompletedAppointments(req,res){
 
 export async function getRejectedAppointments(req,res){
   try {
-    const findApproved= await pkg.Appointment.find({status:'rejected'})
+    const findApproved= await pkg.Appointment.find({status:'cancelled'})
+    res.status(200).json(findApproved)
+  } catch (error) {
+    res.status(500).json({error})
+  }
+}
+
+export async function getDoctorCompletedAppointments(req,res){
+    const {id}=req.params;
+  try {
+    const findApproved= await pkg.Appointment.find({doctorId:id,status:'completed'})
+    res.status(200).json(findApproved)
+  } catch (error) {
+    res.status(500).json({error})
+  }
+}
+
+export async function getDoctorRejectedAppointments(req,res){
+  const {id}=req.params;
+  try {
+    const findApproved= await pkg.Appointment.find({doctorId:id,status:'cancelled'})
     res.status(200).json(findApproved)
   } catch (error) {
     res.status(500).json({error})

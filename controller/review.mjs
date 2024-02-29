@@ -36,7 +36,6 @@ export async function getReviewStatus(req,res){
 }
 
 export async function getReviewAverage(req, res) {
-    const { id } = req.query;
     try {
         const reviews = await pkg.Review.find({ doctorId: id });
 

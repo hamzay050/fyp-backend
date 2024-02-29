@@ -15,7 +15,9 @@ import {
   getRejectedAppointments,
   getCompletedAppointments,
   getPatientCompletedDetails,
-  getDailyAppointment
+  getDailyAppointment,
+  getDoctorCompletedAppointments,
+  getDoctorRejectedAppointments
 } from "../controller/appointments.mjs";
 import verifyAccessToken from "../middleware/verifyAccessToken .mjs";
 
@@ -59,6 +61,10 @@ router.delete("/:id", verifyAccessToken, deleteAppointmentById);
 router.get('/completed/appointments',verifyAccessToken,getCompletedAppointments)
 
 router.get('/rejected/appointments',verifyAccessToken,getRejectedAppointments)
+
+router.get('/completed/appointments/:id',verifyAccessToken,getDoctorCompletedAppointments)
+
+router.get('/rejected/appointments/:id',verifyAccessToken,getDoctorRejectedAppointments)
 
 
 router.get('/status/daily',verifyAccessToken,getDailyAppointment)

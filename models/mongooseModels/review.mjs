@@ -10,7 +10,8 @@ const reviewSchema= new Schema({
     patientName:{type:String,default:null},
     review:{type:String,default:null},
     reviewRating:{type:Number,default:null},
-    status:{type:String,default:'pending'}
+    status:{type:String,default:'pending'},
+    profilePicture:{type:String,default:null}
 },{timestamps:true})
 
 reviewSchema.plugin(mongooseDelete, { overrideMethods: true });
