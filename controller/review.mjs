@@ -34,3 +34,39 @@ export async function getReviewStatus(req,res){
         res.status(500).json({error})
     }
 }
+
+export async function getReviewAverage(req, res) {
+    const { id } = req.query;
+    try {
+        const reviews = await pkg.Review.find({ doctorId: id });
+
+        if (!reviews || reviews.length === 0) {
+            return res.status(404).json({ message: "No reviews found for the specified doctorId" });
+        }
+
+        console.log("Reviews:", reviews); // Log the reviews to verify
+
+        const status = await pkg.Review.aggregate([
+            {
+                $match: {
+                    doctorId: new mongoose.Types.ObjectId(id)
+                }
+            },
+            {
+                $group: {
+                    _id: null, // Group all documents into a single group
+                    averageRating: { $avg: "$reviewRating" } // Calculate average rating
+                }
+            }
+        ]);
+
+        // Ensure that the status array is not empty
+        if (status.length === 0 || status[0].averageRating === null) {
+            return res.status(404).json({ message: "No average rating available for the specified doctorId" });
+        }
+
+        res.status(200).json(status);
+    } catch (error) {
+        res.status(500).json({ error });
+    }
+}
