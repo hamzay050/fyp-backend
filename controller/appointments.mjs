@@ -294,3 +294,20 @@ export async function getRejectedAppointments(req,res){
     res.status(500).json({error})
   }
 }
+
+export async function getDailyAppointment(req,res){
+  const {id}=req.query;
+  try {
+    const currentDate = new Date();
+const startOfDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 0, 0, 0);
+const endOfDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 1, 0, 0, 0);
+
+const find = await pkg.Appointment.find({
+  doctorId: id,
+  createdAt: { $gte: startOfDay, $lt: endOfDay }
+});
+    res.status(200).json(find)
+  } catch (error) {
+    res.status(500).json({error})
+  }
+}
