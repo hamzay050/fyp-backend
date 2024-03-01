@@ -7,7 +7,7 @@ const patientMedicineSchema = new Schema(
   {
     clientId: { type: Types.ObjectId, default: null },
     medicineName:{type:String, default:null},
-    dosage:{type:Number,default:null},
+    dosage:{type:String,default:null},
     startDate:{type:Date,default:null}
   },
   {

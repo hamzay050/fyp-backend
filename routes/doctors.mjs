@@ -9,8 +9,10 @@ import {
   getDoctorPendingProfiles,
   getDoctorAllDetails,
   updateDoctorPendingProfile,
+  getAllDoctorsWithRating
 } from "../controller/doctorProfile.mjs";
 router.get("/", verifyAccessToken, getAllDoctors);
+router.get("/rating",getAllDoctorsWithRating)
 router.get("/byId", verifyAccessToken, getDoctorProfile);
 
 // router.post("/", verifyAccessToken, createJob); // New route for creating a job
